@@ -355,6 +355,9 @@
                     url:$('#rest').val(),
                     method:'post',
                     type:'json',
+                    xhrFields: {
+        withCredentials: true
+    },
                     crossDomain: true,
                     data: $('#point_log').text()
                 }).done(function(data){alert('sukses')}).fail(function(xhr){alert(JSON.stringify(xhr))});
