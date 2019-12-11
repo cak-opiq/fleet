@@ -208,11 +208,15 @@
 
             dash = L.DomUtil.get('dashboard');
 
-            L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-        subdomains: 'abcd',
-        maxZoom: 19
-    }).addTo(map);
+            L.tileLayer(
+                'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                minZoom: 1,
+                maxZoom: 20
+            }).
+
+
+
+                addTo(map);
 
             map.on('locationfound', function (e) {
                 // console.log('prefZoom', map._prefZoom);
@@ -347,6 +351,12 @@
 
             $('#printpoints').on('click', function () {
                 $('#point_log').html(JSON.stringify(points));
+                $.ajax({
+                    url:$('#rest').val(),
+                    method:'post',
+                    type:'json',
+                    data: $('#point_log').text()
+                }).done(function(data){alert('sukses')}).fail(function(xhr){alert(JSON.stringify(xhr))});
             });
 
             function initSettings() {
@@ -485,7 +495,9 @@
         })(jQuery);
       //# sourceURL=pen.js
     </script>
-    <div id="point_log" style="background-color: white;"></div>
+    <label>Rest server<label>
+        <input id="rest">
+    <div id="point_log" ></div>
 </body>
 
 </html>
